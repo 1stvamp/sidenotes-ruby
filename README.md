@@ -1,6 +1,6 @@
 # Sidenotes
 
-[![CI](https://github.com/wesmason/sidenotes/actions/workflows/ci.yml/badge.svg)](https://github.com/wesmason/sidenotes/actions/workflows/ci.yml)
+[![CI](https://github.com/1stvamp/sidenotes-ruby/actions/workflows/ci.yml/badge.svg)](https://github.com/1stvamp/sidenotes-ruby/actions/workflows/ci.yml)
 [![Gem Version](https://badge.fury.io/rb/sidenotes.svg)](https://badge.fury.io/rb/sidenotes)
 
 Structured YAML/JSON schema annotations for Rails models — as sidecar files, not inline comments.
@@ -169,7 +169,7 @@ The structured YAML/JSON format makes it straightforward to build integrations f
 ## Development
 
 ```bash
-git clone https://github.com/wesmason/sidenotes.git
+git clone https://github.com/1stvamp/sidenotes-ruby.git
 cd sidenotes
 bundle install
 bundle exec rspec
@@ -177,7 +177,7 @@ bundle exec rspec
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/wesmason/sidenotes.
+Bug reports and pull requests are welcome on GitHub at https://github.com/1stvamp/sidenotes-ruby.
 
 ## License
 

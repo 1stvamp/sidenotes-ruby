@@ -12,13 +12,13 @@ Gem::Specification.new do |spec|
   spec.description = "Generates structured schema annotation files for Rails models as gitignored " \
                      "sidecar files, replacing inline comments with separate metadata files that " \
                      "IDEs and tools can consume."
-  spec.homepage = "https://github.com/wesmason/sidenotes"
+  spec.homepage = "https://github.com/1stvamp/sidenotes-ruby"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/wesmason/sidenotes"
-  spec.metadata["changelog_uri"] = "https://github.com/wesmason/sidenotes/blob/main/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/1stvamp/sidenotes-ruby"
+  spec.metadata["changelog_uri"] = "https://github.com/1stvamp/sidenotes-ruby/blob/main/CHANGELOG.md"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files = Dir.chdir(__dir__) do
