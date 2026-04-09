@@ -117,7 +117,7 @@ Sidenotes.configure do |config|
 
   # Sections to include
   # Available: :columns, :indexes, :associations, :foreign_keys,
-  #            :check_constraints, :triggers, :metadata
+  #            :check_constraints, :metadata
   config.sections = %i[columns indexes associations foreign_keys metadata]
 
   # Where to look for model files

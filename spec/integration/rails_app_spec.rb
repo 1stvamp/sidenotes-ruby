@@ -14,7 +14,7 @@ RSpec.describe "Integration: Full generation workflow" do
     expect(yml_files).not_to be_empty
 
     # Verify User annotation content
-    user_file = yml_files.find { |f| f.end_with?("user.yml") }
+    user_file = yml_files.find { |f| f.end_with?("/user.yml") }
     expect(user_file).not_to be_nil
 
     content = File.read(user_file)
@@ -41,7 +41,7 @@ RSpec.describe "Integration: Full generation workflow" do
     json_files = Dir.glob(File.join(dir, "**", "*.json"))
     expect(json_files).not_to be_empty
 
-    user_file = json_files.find { |f| f.end_with?("user.json") }
+    user_file = json_files.find { |f| f.end_with?("/user.json") }
     parsed = JSON.parse(File.read(user_file))
     expect(parsed["User"]["metadata"]["table_name"]).to eq("users")
   end

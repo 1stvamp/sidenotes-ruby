@@ -3,18 +3,18 @@
 module Sidenotes
   class Configuration
     VALID_FORMATS = %i[yaml json].freeze
-    VALID_SECTIONS = %i[columns indexes associations foreign_keys check_constraints triggers metadata].freeze
+    VALID_SECTIONS = %i[columns indexes associations foreign_keys check_constraints metadata].freeze
     DEFAULT_SECTIONS = %i[columns indexes associations foreign_keys metadata].freeze
 
-    attr_accessor :output_directory, :format, :sections, :model_paths, :exclude_patterns, :include_triggers
+    attr_reader :output_directory, :format, :sections
+    attr_accessor :model_paths, :exclude_patterns
 
     def initialize
-      @output_directory = ".annotations"
+      @output_directory = '.annotations'
       @format = :yaml
       @sections = DEFAULT_SECTIONS.dup
-      @model_paths = ["app/models"]
+      @model_paths = ['app/models']
       @exclude_patterns = []
-      @include_triggers = false
     end
 
     def format=(value)
@@ -37,13 +37,19 @@ module Sidenotes
     end
 
     def output_directory=(value)
-      @output_directory = value.to_s
+      value = value.to_s
+      if value.empty? || value == '.' || value.start_with?('/')
+        raise ArgumentError, "output_directory must be a relative path within the project (got: #{value.inspect})"
+      end
+
+      @output_directory = value
     end
 
     def file_extension
       case @format
-      when :yaml then "yml"
-      when :json then "json"
+      when :yaml then 'yml'
+      when :json then 'json'
+      else raise ArgumentError, "Unknown format: #{@format}"
       end
     end
   end

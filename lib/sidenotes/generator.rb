@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "fileutils"
+require 'fileutils'
 
 module Sidenotes
   class Generator
@@ -38,15 +38,8 @@ module Sidenotes
       dir = Sidenotes.configuration.output_directory
       return unless File.directory?(dir)
 
-      ext = Sidenotes.configuration.file_extension
-      Dir.glob(File.join(dir, "**", "*.#{ext}")).each { |f| File.delete(f) }
-
-      # Remove empty directories
-      Dir.glob(File.join(dir, "**", "*")).sort.reverse_each do |d|
-        Dir.rmdir(d) if File.directory?(d) && Dir.empty?(d)
-      end
-
-      Dir.rmdir(dir) if File.directory?(dir) && Dir.empty?(dir)
+      remove_annotation_files(dir)
+      remove_empty_dirs(dir)
     end
 
     def discover_models
@@ -56,6 +49,20 @@ module Sidenotes
 
     private
 
+    def remove_annotation_files(dir)
+      ext = Sidenotes.configuration.file_extension
+      Dir.glob(File.join(dir, '**', "*.#{ext}")).each do |f|
+        File.delete(f) if File.read(f, 64)&.include?('Sidenotes')
+      end
+    end
+
+    def remove_empty_dirs(dir)
+      Dir.glob(File.join(dir, '**', '*')).reverse_each do |d|
+        Dir.rmdir(d) if File.directory?(d) && Dir.empty?(d)
+      end
+      Dir.rmdir(dir) if File.directory?(dir) && Dir.empty?(dir)
+    end
+
     def resolve_model(model)
       return model if model.is_a?(Class)
 
@@ -63,19 +70,20 @@ module Sidenotes
     end
 
     def load_model_files
-      config = Sidenotes.configuration
+      return if defined?(Rails) && Rails.application&.config&.eager_load
 
-      config.model_paths.each do |path|
-        full_path = Rails.root.join(path) if defined?(Rails)
-        full_path ||= Pathname.new(path)
-
-        Dir.glob(full_path.join("**", "*.rb")).sort.each do |file|
-          require_dependency(file) if defined?(require_dependency)
-        end
+      model_file_paths.each do |file|
+        require file
+      rescue LoadError, NameError => e
+        warn "Sidenotes: could not load #{file}: #{e.message}"
       end
-    rescue StandardError
-      # Models may already be loaded in eager-loaded environments
-      nil
+    end
+
+    def model_file_paths
+      Sidenotes.configuration.model_paths.flat_map do |path|
+        full_path = defined?(Rails) ? Rails.root.join(path) : Pathname.new(path)
+        Dir.glob(full_path.join('**', '*.rb'))
+      end
     end
 
     def collect_models
@@ -94,7 +102,7 @@ module Sidenotes
       config.exclude_patterns.any? do |pattern|
         case pattern
         when Regexp then model.name.match?(pattern)
-        when String then model.name == pattern || model.name.match?(Regexp.new(pattern))
+        when String then model.name == pattern
         else false
         end
       end

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "sidenotes/version"
-require_relative "sidenotes/configuration"
-require_relative "sidenotes/model_inspector"
-require_relative "sidenotes/formatter"
-require_relative "sidenotes/generator"
+require_relative 'sidenotes/version'
+require_relative 'sidenotes/configuration'
+require_relative 'sidenotes/model_inspector'
+require_relative 'sidenotes/formatter'
+require_relative 'sidenotes/generator'
 
 module Sidenotes
   class Error < StandardError; end
@@ -24,4 +24,4 @@ module Sidenotes
   end
 end
 
-require_relative "sidenotes/railtie" if defined?(Rails::Railtie)
+require_relative 'sidenotes/railtie' if defined?(Rails::Railtie)

@@ -119,13 +119,6 @@ class Category < ApplicationRecord
   has_many :children, class_name: "Category", foreign_key: "parent_id", dependent: :destroy
 end
 
-# Namespaced model simulation
-module Admin
-  def self.table_name_prefix
-    "users"
-  end
-end
-
 # Model without a table
 class OrphanModel < ApplicationRecord
   self.abstract_class = true

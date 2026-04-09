@@ -8,7 +8,7 @@ Sidenotes.configure do |config|
   # config.format = :yaml
 
   # Sections to include in annotations
-  # Available: :columns, :indexes, :associations, :foreign_keys, :check_constraints, :triggers, :metadata
+  # Available: :columns, :indexes, :associations, :foreign_keys, :check_constraints, :metadata
   # config.sections = %i[columns indexes associations foreign_keys metadata]
 
   # Paths to search for model files (relative to Rails root)
