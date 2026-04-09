@@ -186,7 +186,7 @@ The structured YAML/JSON format makes it straightforward to build integrations f
 ## Requirements
 
 - Ruby >= 3.1
-- Rails >= 6.1
+- Rails >= 6.0
 
 ## Development
 
