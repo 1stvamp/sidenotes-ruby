@@ -142,6 +142,26 @@ RSpec.describe Sidenotes::ModelInspector do
       end
     end
 
+    context "with a broken association reflection" do
+      it "skips associations that raise NoMethodError" do
+        broken_assoc = instance_double(
+          ActiveRecord::Reflection::AssociationReflection,
+          macro: :has_many,
+          name: :broken_things
+        )
+        allow(broken_assoc).to receive(:class_name).and_raise(NoMethodError)
+
+        allow(User).to receive(:reflect_on_all_associations).and_return(
+          [broken_assoc] + User.reflect_on_all_associations
+        )
+
+        data = described_class.new(User).inspect_model
+        associations = data["associations"]
+        expect(associations.none? { |a| a["name"] == "broken_things" }).to be true
+        expect(associations).not_to be_empty
+      end
+    end
+
     context "with abstract model" do
       it "returns nil for abstract models" do
         data = described_class.new(ApplicationRecord).inspect_model
