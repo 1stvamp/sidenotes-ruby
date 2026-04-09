@@ -12,9 +12,6 @@ group :development do
 end
 
 group :test do
-  gem 'activerecord'
-  gem 'activesupport'
-  gem 'railties'
   gem 'rspec', '~> 3.12'
-  gem 'sqlite3', '~> 1.6'
+  gem 'sqlite3'
 end
