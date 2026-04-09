@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sidenotes (0.1.1)
+    sidenotes (0.1.2)
       activerecord (>= 6.0)
       activesupport (>= 6.0)
       railties (>= 6.0)
@@ -78,6 +78,8 @@ GEM
       nokogiri (>= 1.12.0)
     minitest (5.27.0)
     nokogiri (1.18.10-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.18.10-x86_64-linux-gnu)
       racc (~> 1.4)
     parallel (1.28.0)
     parser (3.3.11.1)

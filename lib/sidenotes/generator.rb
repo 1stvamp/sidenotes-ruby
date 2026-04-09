@@ -70,20 +70,9 @@ module Sidenotes
     end
 
     def load_model_files
-      return if defined?(Rails) && Rails.application&.config&.eager_load
+      return unless defined?(Rails) && Rails.application
 
-      model_file_paths.each do |file|
-        require file
-      rescue LoadError, NameError => e
-        warn "Sidenotes: could not load #{file}: #{e.message}"
-      end
-    end
-
-    def model_file_paths
-      Sidenotes.configuration.model_paths.flat_map do |path|
-        full_path = defined?(Rails) ? Rails.root.join(path) : Pathname.new(path)
-        Dir.glob(full_path.join('**', '*.rb'))
-      end
+      Rails.application.eager_load!
     end
 
     def collect_models

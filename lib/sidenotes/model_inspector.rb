@@ -108,7 +108,7 @@ module Sidenotes
     end
 
     def associations
-      model.reflect_on_all_associations.map { |assoc| build_association_data(assoc) }
+      model.reflect_on_all_associations.filter_map { |assoc| build_association_data(assoc) }
     end
 
     def build_association_data(assoc)
@@ -119,6 +119,8 @@ module Sidenotes
       data['polymorphic'] = true if opts[:polymorphic]
       data['through'] = opts[:through].to_s if opts[:through]
       data
+    rescue NoMethodError
+      nil
     end
 
     def foreign_keys
