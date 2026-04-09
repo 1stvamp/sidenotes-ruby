@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+return unless defined?(Sidenotes)
+
 Sidenotes.configure do |config|
   # Directory where annotation files are generated (relative to Rails root)
   # config.output_directory = ".annotations"

@@ -28,14 +28,30 @@ group :development do
 end
 ```
 
-Then run the install generator:
+Then run `bundle install` and generate annotations:
 
 ```bash
 bundle install
+rake sidenotes:generate
+```
+
+That's it. Sidenotes works with sensible defaults and no configuration.
+
+### Optional setup
+
+If you want to customise the configuration, run the install generator:
+
+```bash
 rails generate sidenotes:install
 ```
 
-This creates `config/initializers/sidenotes.rb` and adds `.annotations/` to your `.gitignore`.
+This creates `config/initializers/sidenotes.rb` (guarded with `return unless defined?(Sidenotes)` so it's safe in production) and adds `.annotations/` to your `.gitignore`.
+
+If you'd prefer to commit your annotations, skip the gitignore step:
+
+```bash
+rails generate sidenotes:install --no-gitignore
+```
 
 ## Usage
 
@@ -108,6 +124,8 @@ User:
 
 ```ruby
 # config/initializers/sidenotes.rb
+return unless defined?(Sidenotes)
+
 Sidenotes.configure do |config|
   # Directory for annotation files (relative to Rails root)
   config.output_directory = ".annotations"
